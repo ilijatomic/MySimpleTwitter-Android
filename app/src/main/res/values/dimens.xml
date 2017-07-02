@@ -1,0 +1,6 @@
+<resources>
+
+    <!-- Splash/Login screen -->
+    <dimen name="splash_login_button_top_margin">80dp</dimen>
+
+</resources>
