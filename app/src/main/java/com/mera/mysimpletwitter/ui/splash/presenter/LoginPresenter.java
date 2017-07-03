@@ -10,9 +10,6 @@ import com.twitter.sdk.android.core.TwitterSession;
 
 public class LoginPresenter implements ILoginPresenter {
 
-    public LoginPresenter() {
-    }
-
     @Override
     public boolean checkLoginSession() {
         return TwitterCore.getInstance().getSessionManager().getActiveSession() != null;

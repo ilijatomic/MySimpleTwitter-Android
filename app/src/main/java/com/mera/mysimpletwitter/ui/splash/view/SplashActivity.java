@@ -9,7 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.mera.mysimpletwitter.R;
-import com.mera.mysimpletwitter.ui.common.BaseActivity;
+import com.mera.mysimpletwitter.ui.application.BaseActivity;
 import com.mera.mysimpletwitter.ui.splash.di.DaggerSplashComponent;
 import com.mera.mysimpletwitter.ui.splash.presenter.LoginPresenter;
 import com.mera.mysimpletwitter.ui.timeline.view.TimelineActivity;
@@ -66,7 +66,8 @@ public class SplashActivity extends BaseActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                checkLoginSession();
+//                checkLoginSession();
+                showTimeLiveScreen();
             }
         }, TWO_SECONDS);
     }

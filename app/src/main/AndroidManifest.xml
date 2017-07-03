@@ -3,7 +3,7 @@
     package="com.mera.mysimpletwitter">
 
     <application
-        android:name=".ui.common.MSTApplication"
+        android:name=".ui.application.MSTApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"

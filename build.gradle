@@ -2,10 +2,15 @@
 
 buildscript {
     repositories {
+        maven { url 'https://plugins.gradle.org/m2/' }
         jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath "io.realm:realm-gradle-plugin:3.4.0"
+        classpath 'me.tatarka:gradle-retrolambda:3.6.1'
+        classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -14,6 +19,7 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url 'http://dl.bintray.com/populov/maven' }
         jcenter()
     }
 }
