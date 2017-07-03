@@ -4,15 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import com.mera.mysimpletwitter.R;
 import com.mera.mysimpletwitter.ui.application.BaseActivity;
 import com.mera.mysimpletwitter.ui.splash.di.DaggerSplashComponent;
 import com.mera.mysimpletwitter.ui.splash.presenter.LoginPresenter;
 import com.mera.mysimpletwitter.ui.timeline.view.TimelineActivity;
+import com.mera.mysimpletwitter.ui.utils.NetworkUtils;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
@@ -50,6 +55,12 @@ public class SplashActivity extends BaseActivity {
                 .build()
                 .inject(this);
 
+        mLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NetworkUtils.isNetworkAvailable(getApplicationContext());
+            }
+        });
         mLoginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
@@ -58,7 +69,11 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void failure(TwitterException exception) {
-
+                if (!NetworkUtils.isNetworkAvailable(getApplicationContext())) {
+                    Snackbar.make(findViewById(android.R.id.content), "Please make sure you have active internet connection", BaseTransientBottomBar.LENGTH_LONG).show();
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content), "Please make sure you have install twitter application", BaseTransientBottomBar.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -66,8 +81,7 @@ public class SplashActivity extends BaseActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-//                checkLoginSession();
-                showTimeLiveScreen();
+                checkLoginSession();
             }
         }, TWO_SECONDS);
     }

@@ -18,6 +18,8 @@ import io.reactivex.Scheduler;
 
 public class TimelinePresenter implements ITimelinePresenter {
 
+    private static final String TAG = TimelinePresenter.class.getSimpleName();
+
     private static final Integer DEFAULT_COUNT_SIZE = 50;
 
     private final TimelineModel mTimelineModel;
@@ -53,7 +55,13 @@ public class TimelinePresenter implements ITimelinePresenter {
 
     @Override
     public void saveTweetsToDB(List<Tweet> tweets) {
-        mTimelineModel.saveTimelineTweets(tweets);
+        mTimelineModel.saveTimelineTweets(tweets)
+        .observeOn(mScheduler)
+        .subscribe(timelineSave -> {
+            if (timelineSave) {
+                Log.d(TAG, "saveTweetsToDB: success");
+            }
+        });
     }
 
     @Override

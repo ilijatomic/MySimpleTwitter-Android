@@ -58,8 +58,6 @@ public class TimelineModel extends TwitterApiClient implements ITimelineModel {
                 tweetEntity.setText(tweet.text);
                 if (tweet.entities.media != null) {
                     tweetEntity.setMediaUrl(tweet.entities.media.get(0).mediaUrl);
-                    tweetEntity.setSmallSizeWidth(tweet.entities.media.get(0).sizes.small.w);
-                    tweetEntity.setSmallSizeHeight(tweet.entities.media.get(0).sizes.small.h);
                 }
                 realm.copyToRealmOrUpdate(tweetEntity);
                 realm.commitTransaction();

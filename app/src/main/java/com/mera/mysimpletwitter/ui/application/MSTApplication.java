@@ -22,7 +22,7 @@ public class MSTApplication extends Application {
         super.onCreate();
 
         Twitter.initialize(this);
-        Realm.init(getApplicationContext());
+        Realm.init(this);
     }
 
 }

@@ -16,8 +16,6 @@ public class TweetEntity extends RealmObject {
     private String createdAt;
     private String text;
     private String mediaUrl;
-    private int smallSizeWidth;
-    private int smallSizeHeight;
 
     public String getId() {
         return id;
@@ -75,19 +73,4 @@ public class TweetEntity extends RealmObject {
         this.mediaUrl = mediaUrl;
     }
 
-    public int getSmallSizeWidth() {
-        return smallSizeWidth;
-    }
-
-    public void setSmallSizeWidth(int smallSizeWidth) {
-        this.smallSizeWidth = smallSizeWidth;
-    }
-
-    public int getSmallSizeHeight() {
-        return smallSizeHeight;
-    }
-
-    public void setSmallSizeHeight(int smallSizeHeight) {
-        this.smallSizeHeight = smallSizeHeight;
-    }
 }

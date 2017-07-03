@@ -55,9 +55,7 @@ dependencies {
 
     // Dagger2
     compile 'com.google.dagger:dagger-android:2.11'
-    compile 'com.google.dagger:dagger-android-support:2.11'
     apt 'com.google.dagger:dagger-compiler:2.11'
-    apt 'com.google.dagger:dagger-android-processor:2.11'
 
     // rxJava
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'

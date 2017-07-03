@@ -20,17 +20,24 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by ilija.tomic on 7/3/2017.
  */
 public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHolder> {
 
+    private PublishSubject<String> mViewClickSubject = PublishSubject.create();
     private List<Object> mTimelineTweets;
 
     public void setItems(List<Object> timelineTweets) {
         this.mTimelineTweets = timelineTweets;
         notifyDataSetChanged();
+    }
+
+    public PublishSubject<String> getViewClickSubject() {
+        return mViewClickSubject;
     }
 
     @Override
@@ -48,8 +55,6 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
         String createdAt = null;
         String text = null;
         String mediaUrl = null;
-        int smallSizeWidth = 0;
-        int smallSizeHeight = 0;
 
         if (tweet instanceof Tweet) {
             Tweet tweetTemp = (Tweet) tweet;
@@ -60,8 +65,6 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
             text = tweetTemp.text;
             if (tweetTemp.entities.media != null) {
                 mediaUrl = tweetTemp.entities.media.get(0).mediaUrl;
-                smallSizeWidth = tweetTemp.entities.media.get(0).sizes.small.w;
-                smallSizeHeight = tweetTemp.entities.media.get(0).sizes.small.h;
             }
         } else if (tweet instanceof TweetEntity) {
             TweetEntity tweetTemp = (TweetEntity) tweet;
@@ -72,8 +75,6 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
             text = tweetTemp.getText();
             if (tweetTemp.getMediaUrl() != null) {
                 mediaUrl = tweetTemp.getMediaUrl();
-                smallSizeWidth = tweetTemp.getSmallSizeWidth();
-                smallSizeHeight = tweetTemp.getSmallSizeHeight();
             }
         }
         Picasso.with(holder.avatarImageView.getContext())
@@ -93,7 +94,7 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
         if (mediaUrl != null) {
             Picasso.with(holder.mediaImageView.getContext())
                     .load(mediaUrl)
-                    .resize(smallSizeWidth, smallSizeHeight)
+                    .fit()
                     .centerCrop()
                     .into(holder.mediaImageView);
         } else {
@@ -124,6 +125,22 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            mediaImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getLayoutPosition();
+                    String mediaUrl = null;
+                    Object tweet = mTimelineTweets.get(position);
+                    if (tweet instanceof Tweet) {
+                        mediaUrl = ((Tweet) tweet).entities.media.get(0).url;
+                    } else if (tweet instanceof TweetEntity) {
+                        mediaUrl = ((TweetEntity) tweet).getMediaUrl();
+                    }
+
+                    mViewClickSubject.onNext(mediaUrl);
+                }
+            });
         }
     }
 }
