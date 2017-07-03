@@ -7,6 +7,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.Toast;
 
 import com.mera.mysimpletwitter.R;
@@ -72,6 +74,13 @@ public class TimelineActivity extends BaseActivity implements TimelineListener {
         mSwipeRefreshLayout.setRefreshing(true);
 
         mTimelinePresenter.init(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.timeline_menu, menu);
+        return true;
     }
 
     @Override

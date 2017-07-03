@@ -70,9 +70,9 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void failure(TwitterException exception) {
                 if (!NetworkUtils.isNetworkAvailable(getApplicationContext())) {
-                    Snackbar.make(findViewById(android.R.id.content), "Please make sure you have active internet connection", BaseTransientBottomBar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.no_internet_connection, BaseTransientBottomBar.LENGTH_LONG).show();
                 } else {
-                    Snackbar.make(findViewById(android.R.id.content), "Please make sure you have install twitter application", BaseTransientBottomBar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.no_twitter_application, BaseTransientBottomBar.LENGTH_LONG).show();
                 }
             }
         });
