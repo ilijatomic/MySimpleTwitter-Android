@@ -133,7 +133,7 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
                     String mediaUrl = null;
                     Object tweet = mTimelineTweets.get(position);
                     if (tweet instanceof Tweet) {
-                        mediaUrl = ((Tweet) tweet).entities.media.get(0).url;
+                        mediaUrl = ((Tweet) tweet).entities.media.get(0).mediaUrl;
                     } else if (tweet instanceof TweetEntity) {
                         mediaUrl = ((TweetEntity) tweet).getMediaUrl();
                     }

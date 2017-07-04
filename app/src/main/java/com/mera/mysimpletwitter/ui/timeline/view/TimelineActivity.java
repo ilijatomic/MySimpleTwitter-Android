@@ -1,5 +1,8 @@
 package com.mera.mysimpletwitter.ui.timeline.view;
 
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.widget.Toast;
 
 import com.mera.mysimpletwitter.R;
 import com.mera.mysimpletwitter.core.db.TweetEntity;
@@ -18,6 +20,7 @@ import com.mera.mysimpletwitter.ui.timeline.di.DaggerTimelineComponent;
 import com.mera.mysimpletwitter.ui.timeline.presenter.TimelinePresenter;
 import com.mera.mysimpletwitter.ui.timeline.view.adapter.EndlessScrollListener;
 import com.mera.mysimpletwitter.ui.timeline.view.adapter.TimelineAdapter;
+import com.mera.mysimpletwitter.ui.timeline.view.fragment.TweetImageFragment;
 import com.twitter.sdk.android.core.models.Tweet;
 
 import java.util.ArrayList;
@@ -64,13 +67,11 @@ public class TimelineActivity extends BaseActivity implements TimelineListener {
         mTimelineTweets.setLayoutManager(lm);
 
         mTimelineAdapter = new TimelineAdapter();
-        mTimelineAdapter.getViewClickSubject().subscribe(mediaUrl -> {
-            Toast.makeText(this, mediaUrl, Toast.LENGTH_LONG).show();
-        });
+        mTimelineAdapter.getViewClickSubject().subscribe(this::showTweetImage);
         mTimelineTweets.setAdapter(mTimelineAdapter);
         mTimelineTweets.addOnScrollListener(mEndlessListener);
 
-        mSwipeRefreshLayout.setOnRefreshListener(() -> mTimelinePresenter.loadMore());
+        mSwipeRefreshLayout.setOnRefreshListener(mTimelinePresenter::loadMore);
         mSwipeRefreshLayout.setRefreshing(true);
 
         mTimelinePresenter.init(this);
@@ -99,6 +100,19 @@ public class TimelineActivity extends BaseActivity implements TimelineListener {
 
         List<Object> tweet = new ArrayList<>(tweets);
         mTimelineAdapter.setItems(tweet);
+    }
+
+    void showTweetImage(String imageUrl) {
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag(TweetImageFragment.class.getSimpleName());
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        DialogFragment dialogFragment = TweetImageFragment.newInstance(imageUrl);
+        dialogFragment.show(ft, TweetImageFragment.class.getSimpleName());
     }
 
     @Override
