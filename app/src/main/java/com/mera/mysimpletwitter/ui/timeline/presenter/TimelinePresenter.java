@@ -14,6 +14,7 @@ import io.reactivex.Scheduler;
 
 /**
  * Created by ikac on 7/2/17.
+ * Presenter for {@link com.mera.mysimpletwitter.ui.timeline.view.TimelineActivity}
  */
 
 public class TimelinePresenter implements ITimelinePresenter {

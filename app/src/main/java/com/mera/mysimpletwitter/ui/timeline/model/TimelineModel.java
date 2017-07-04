@@ -19,6 +19,11 @@ import io.realm.Realm;
 
 public class TimelineModel extends TwitterApiClient implements ITimelineModel {
 
+    /**
+     * Passing active session to {@link TwitterApiClient}
+     *
+     * @param session active user session
+     */
     public TimelineModel(TwitterSession session) {
         super(session);
     }

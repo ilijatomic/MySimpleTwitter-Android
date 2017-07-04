@@ -10,6 +10,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 /**
  * Created by ilija.tomic on 7/3/2017.
+ * Util class for converting time into better presentation for user
  */
 public class TimelineConverter {
 

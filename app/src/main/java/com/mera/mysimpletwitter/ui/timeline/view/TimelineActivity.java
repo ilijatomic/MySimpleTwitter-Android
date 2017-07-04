@@ -3,19 +3,25 @@ package com.mera.mysimpletwitter.ui.timeline.view;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.mera.mysimpletwitter.R;
 import com.mera.mysimpletwitter.core.db.TweetEntity;
 import com.mera.mysimpletwitter.ui.application.BaseActivity;
+import com.mera.mysimpletwitter.ui.search.view.SearchActivity;
 import com.mera.mysimpletwitter.ui.timeline.di.DaggerTimelineComponent;
 import com.mera.mysimpletwitter.ui.timeline.presenter.TimelinePresenter;
 import com.mera.mysimpletwitter.ui.timeline.view.adapter.EndlessScrollListener;
@@ -33,6 +39,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by ikac on 7/2/17.
+ * Activity for displaying and handling actions on timeline screen
  */
 
 public class TimelineActivity extends BaseActivity implements TimelineListener {
@@ -79,8 +86,14 @@ public class TimelineActivity extends BaseActivity implements TimelineListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.timeline_menu, menu);
+        getMenuInflater().inflate(R.menu.timeline_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        ComponentName componentName = new ComponentName(this, SearchActivity.class);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+
         return true;
     }
 
@@ -102,6 +115,11 @@ public class TimelineActivity extends BaseActivity implements TimelineListener {
         mTimelineAdapter.setItems(tweet);
     }
 
+    /**
+     * This is where dialog fragment is created and image from tweet is displayed
+     *
+     * @param imageUrl image url to load
+     */
     void showTweetImage(String imageUrl) {
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();

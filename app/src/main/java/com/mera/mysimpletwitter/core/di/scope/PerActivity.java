@@ -10,5 +10,5 @@ import javax.inject.Scope;
  * DI activity scope
  */
 @Scope
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.CLASS)
 public @interface PerActivity {}

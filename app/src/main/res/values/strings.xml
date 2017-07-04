@@ -6,5 +6,10 @@
     <string name="app_name">My Simple Twitter</string>
     <string name="no_internet_connection">Please make sure you have active internet connection</string>
     <string name="no_twitter_application">Please make sure you have install twitter application</string>
+
     <string name="action_search">Search</string>
+    <string name="action_search_hint">Search twitter…</string>
+
+    <string name="search_error_message">Something went wrong, please try again.</string>
+    <string name="search_try_again">Try again</string>
 </resources>

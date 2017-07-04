@@ -5,6 +5,7 @@ import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by ilija.tomic on 7/3/2017.
+ * DB entity that map and save {@link com.twitter.sdk.android.core.models.Tweet} in database
  */
 public class TweetEntity extends RealmObject {
 

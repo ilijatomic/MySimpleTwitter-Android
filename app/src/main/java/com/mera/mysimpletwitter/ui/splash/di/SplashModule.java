@@ -7,7 +7,7 @@ import dagger.Provides;
 
 /**
  * Created by ikac on 7/2/17.
- * DI module for {@link SplashComponent}
+ * Dagger module for {@link SplashComponent}
  */
 @Module
 public class SplashModule {

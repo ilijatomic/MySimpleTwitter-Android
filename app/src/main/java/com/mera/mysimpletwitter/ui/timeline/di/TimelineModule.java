@@ -11,6 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by ikac on 7/2/17.
+ * Module for {@link TimelineComponent}
  */
 @Module
 public class TimelineModule {

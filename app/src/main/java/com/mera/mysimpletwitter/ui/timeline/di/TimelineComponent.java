@@ -7,6 +7,7 @@ import dagger.Component;
 
 /**
  * Created by ilija.tomic on 7/3/2017.
+ * Dagger Component for {@link TimelineActivity}
  */
 @PerActivity
 @Component(modules = TimelineModule.class)

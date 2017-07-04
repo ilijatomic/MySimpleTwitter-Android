@@ -6,11 +6,9 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Toast;
 
 import com.mera.mysimpletwitter.R;
 import com.mera.mysimpletwitter.ui.application.BaseActivity;
@@ -55,12 +53,7 @@ public class SplashActivity extends BaseActivity {
                 .build()
                 .inject(this);
 
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NetworkUtils.isNetworkAvailable(getApplicationContext());
-            }
-        });
+        mLoginButton.setOnClickListener(v -> NetworkUtils.isNetworkAvailable(getApplicationContext()));
         mLoginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
@@ -69,6 +62,7 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void failure(TwitterException exception) {
+                // Handling twitter login exception
                 if (!NetworkUtils.isNetworkAvailable(getApplicationContext())) {
                     Snackbar.make(findViewById(android.R.id.content), R.string.no_internet_connection, BaseTransientBottomBar.LENGTH_LONG).show();
                 } else {
@@ -87,12 +81,13 @@ public class SplashActivity extends BaseActivity {
     }
 
     /**
-     *
+     *  Checks if active login session exists
      */
     private void checkLoginSession() {
         if (mLoginPresenter.checkLoginSession()) {
             showTimeLiveScreen();
         } else {
+            // If session doesn't exists or is expired, show log in button
             mLoginButton.setVisibility(View.VISIBLE);
             Animation fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in_animation);
             mLoginButton.startAnimation(fadeInAnimation);
@@ -100,7 +95,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     /**
-     *
+     * Starting {@link TimelineActivity} screen
      */
     private void showTimeLiveScreen() {
         startActivity(new Intent(this, TimelineActivity.class));

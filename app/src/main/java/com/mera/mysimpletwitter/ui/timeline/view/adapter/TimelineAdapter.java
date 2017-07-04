@@ -20,11 +20,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by ilija.tomic on 7/3/2017.
+ * Adapter for tweets, either from Twitter API or from database
  */
 public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHolder> {
 
@@ -77,10 +77,12 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
                 mediaUrl = tweetTemp.getMediaUrl();
             }
         }
+
         Picasso.with(holder.avatarImageView.getContext())
                 .load(userProfileImgUrl)
                 .fit()
                 .into(holder.avatarImageView);
+
         holder.nameView.setText(userName);
         holder.handleView.setText(String.format("@%s", userScreenName));
         holder.timeView.setText(TimelineConverter.dateToAge(createdAt, DateTime.now()));
@@ -126,20 +128,17 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.ViewHo
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            mediaImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getLayoutPosition();
-                    String mediaUrl = null;
-                    Object tweet = mTimelineTweets.get(position);
-                    if (tweet instanceof Tweet) {
-                        mediaUrl = ((Tweet) tweet).entities.media.get(0).mediaUrl;
-                    } else if (tweet instanceof TweetEntity) {
-                        mediaUrl = ((TweetEntity) tweet).getMediaUrl();
-                    }
-
-                    mViewClickSubject.onNext(mediaUrl);
+            mediaImageView.setOnClickListener(v -> {
+                int position = getLayoutPosition();
+                String mediaUrl = null;
+                Object tweet = mTimelineTweets.get(position);
+                if (tweet instanceof Tweet) {
+                    mediaUrl = ((Tweet) tweet).entities.media.get(0).mediaUrl;
+                } else if (tweet instanceof TweetEntity) {
+                    mediaUrl = ((TweetEntity) tweet).getMediaUrl();
                 }
+
+                mViewClickSubject.onNext(mediaUrl);
             });
         }
     }

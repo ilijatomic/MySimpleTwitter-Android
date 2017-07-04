@@ -3,6 +3,10 @@ package com.mera.mysimpletwitter.ui.timeline.view.adapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+/**
+ * Util class for lazy loading implementation
+ * Triggering event when user reaches end of list
+ */
 public abstract class EndlessScrollListener extends RecyclerView.OnScrollListener {
 
     // The minimum number of items to have below your current scroll position
@@ -47,6 +51,9 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
         }
     }
 
+    /**
+     * Loading more tweets when user reaches end of list
+     */
     public abstract void onLoadMore();
 
 }

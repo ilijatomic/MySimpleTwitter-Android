@@ -7,7 +7,7 @@ import dagger.Component;
 
 /**
  * Created by ikac on 7/2/17.
- * DI component for splash/login activity
+ * Dagger component for {@link SplashActivity}
  */
 @PerActivity
 @Component(modules = SplashModule.class)
